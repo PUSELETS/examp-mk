@@ -49,7 +49,7 @@ export const authRouter = router({
 
                 //send email
                 //URL
-                const URL = "http://localhost:3000/verify-email?token="
+                const URL = "https://ol6gordfk-q2nbvru02-mishacks-projects.vercel.app/verify-email?token="
                 const tokenUrl = `${token}`
                 const cancatinateUrl = URL + tokenUrl
                 //
@@ -116,7 +116,7 @@ export const authRouter = router({
                 const token = jwt.sign(payload, "qewretryu576rtxcnutqaetr3456700fdxfn")
 
             
-                return 
+                return token
                        
             } catch (err) {
                 throw new TRPCError({

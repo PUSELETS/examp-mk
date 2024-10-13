@@ -38,9 +38,9 @@ const Page = () => {
     trpc.auth.signIn.useMutation({
       onSuccess: async (yourAccessKey) => {
 
-      
+        console.log(yourAccessKey)
 
-        setToken('')
+        setToken(yourAccessKey)
 
         toast.success('Signed in successfully')
 

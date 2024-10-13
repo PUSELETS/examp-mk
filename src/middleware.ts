@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 
 export function middleware(request: NextRequest){
     const responce = NextResponse.next()
-    const headerList = headers()
 
     responce.headers.set("custom-headers", "custom-value")
 

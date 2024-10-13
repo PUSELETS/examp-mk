@@ -9,8 +9,6 @@ let token: string;
 
 export const setToken = (newToken: string)=>{
     token = newToken
-
-    console.log(token, 'one or two')
 }
 
 const Providers = ({children}: PropsWithChildren) => {
