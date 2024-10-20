@@ -9,10 +9,8 @@ import { EmailTemplate } from "../../components/email-template";
 import { Resend } from 'resend';
 import { databases, DATABASE_ID_DEV, COLLECTION_ID_USER } from "../appwrite";
 import { setToken } from "@/middleware";
-import * as jwt from 'jsonwebtoken'
 import { SignJWT } from "jose";
 import { getJwtSecretKey } from "../../lib/auth";
-import { cookies } from "next/headers";
 
 
 
@@ -50,7 +48,7 @@ export const authRouter = router({
 
                 //send email
                 //URL
-                const URL =`${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=`
+                const URL ="https://mk-mishacks-projects.vercel.app/verify-email?token="
                 const tokenUrl = `${token}`
                 const cancatinateUrl = URL + tokenUrl
                 //
