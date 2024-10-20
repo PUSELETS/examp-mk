@@ -6,7 +6,7 @@ interface UserJwtPayload {
 }
 
 export const getJwtSecretKey = () => {
-    const secret = "iudfbjeu7653gjhertyunvx4567cvtyunftu"
+    const secret = process.env.JWT_SECRET_KEY
 
     if(!secret || secret.length === 0){
         throw new Error('the environment variable JWT is not set')

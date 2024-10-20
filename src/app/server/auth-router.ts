@@ -1,17 +1,18 @@
-import { AuthCredentialsValidator } from "../lib/validators/account-credentials-validator";
+import { AuthCredentialsValidator } from "../../lib/validators/account-credentials-validator";
 import { publicProcedure, router } from "./trpc";
 import { z } from "zod";
 import { v4 as uuid } from "uuid";
-import { db } from "../app/database";
+import { db } from "../database";
 import { Query } from 'appwrite';
 import { TRPCError } from "@trpc/server";
-import { EmailTemplate } from "../components/email-template";
+import { EmailTemplate } from "../../components/email-template";
 import { Resend } from 'resend';
-import { databases, DATABASE_ID_DEV, COLLECTION_ID_USER } from "../app/appwrite";
-import { AsyncLocalStorage } from 'async_hooks';
+import { databases, DATABASE_ID_DEV, COLLECTION_ID_USER } from "../appwrite";
+import { setToken } from "@/middleware";
 import * as jwt from 'jsonwebtoken'
 import { SignJWT } from "jose";
-import { getJwtSecretKey } from "../lib/auth";
+import { getJwtSecretKey } from "../../lib/auth";
+import { cookies } from "next/headers";
 
 
 
@@ -49,7 +50,7 @@ export const authRouter = router({
 
                 //send email
                 //URL
-                const URL = "https://ol6gordfk-q2nbvru02-mishacks-projects.vercel.app/verify-email?token="
+                const URL = "http://localhost:3000/verify-email?token="
                 const tokenUrl = `${token}`
                 const cancatinateUrl = URL + tokenUrl
                 //
@@ -66,7 +67,6 @@ export const authRouter = router({
                     return console.error('failed', error)
                 }
 
-
             }
 
             init()
@@ -76,8 +76,9 @@ export const authRouter = router({
 
     verifyEmail: publicProcedure
         .input(z.object({ token: z.string() }))
-        .query(async ({ input }) => {
+        .query(async ({ input, ctx }) => {
             const { token } = input
+            const { res } = ctx
 
             const respon = await db.user.list(
                 [Query.equal("Token", [token])]
@@ -93,6 +94,7 @@ export const authRouter = router({
 
             );
 
+    
 
             if (!isVerified)
                 throw new TRPCError({ code: 'UNAUTHORIZED' })
@@ -102,10 +104,9 @@ export const authRouter = router({
 
     signIn: publicProcedure
         .input(AuthCredentialsValidator)
-        .mutation(async ({ input, ctx }) => {
+        .mutation(async ({ input }) => {
             const { email, password } = input
-            const { res } = ctx
-
+            
             try {
 
                 const payload = {
@@ -113,10 +114,15 @@ export const authRouter = router({
                     password: password
                 }
 
-                const token = jwt.sign(payload, "qewretryu576rtxcnutqaetr3456700fdxfn")
+                const token = await new SignJWT(payload)
+                    .setProtectedHeader({alg:'HS256'})
+                    .setJti(uuid())
+                    .setIssuedAt()
+                    .setExpirationTime('5m')
+                    .sign(new TextEncoder().encode(getJwtSecretKey()))
 
-            
-                return token
+
+                return setToken(token)
                        
             } catch (err) {
                 throw new TRPCError({

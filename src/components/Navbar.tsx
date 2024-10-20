@@ -9,7 +9,7 @@ import Cart from './Cart'
 
 const Navbar = async () => {
  
-  const user = false
+  const user = null
 
   return (
     <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>

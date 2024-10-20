@@ -10,10 +10,10 @@ import { ArrowRight, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import {AuthCredentialsValidator,TAuthCredentialsValidator} from '@/lib/validators/account-credentials-validator'
-import { trpc } from '@/trpc/client'
+import { trpc } from '@/app/_trpc/client'
 import { toast } from 'sonner'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { setToken } from '@/components/Providers'
+import { setToken } from '@/app/_trpc/Providers'
 
 
 const Page = () => {
@@ -38,8 +38,6 @@ const Page = () => {
     trpc.auth.signIn.useMutation({
       onSuccess: async (yourAccessKey) => {
 
-        console.log(yourAccessKey)
-
         setToken(yourAccessKey)
 
         toast.success('Signed in successfully')
@@ -51,7 +49,7 @@ const Page = () => {
           return
         }
 
-        
+        router.push('/')
       },
       onError: (err) => {
         if (err.data?.code === 'UNAUTHORIZED') {
@@ -88,10 +86,10 @@ const Page = () => {
             </Link>
           </div>
 
-          <div className='grid gap-6'>
+          <div className='grid gap-6 w-full max-w-md sm:max-w-xs p-4 text-gray-900 shadow mt-8 space-y-6'>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='grid gap-2'>
-                <div className='grid gap-1 py-2'>
+                <div className='grid gap-1 py-2 '>
                   <Label htmlFor='email'>Email</Label>
                   <Input
                     {...register('email')}
