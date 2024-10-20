@@ -50,7 +50,7 @@ export const authRouter = router({
 
                 //send email
                 //URL
-                const URL = "http://localhost:3000/verify-email?token="
+                const URL =`${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=`
                 const tokenUrl = `${token}`
                 const cancatinateUrl = URL + tokenUrl
                 //
