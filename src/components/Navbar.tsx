@@ -1,15 +1,19 @@
+
+
 import Link from 'next/link'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { Icons } from './Icons'
 import { buttonVariants } from './ui/button'
-import { cookies } from 'next/headers'
 import NavItems from './NavItems'
 import MobileNav from './MobileNav'
 import Cart from './Cart'
+import UserAccountNav from './UserAccountNav'
+import { getServerSideUser } from '@/lib/user'
+import { useForm } from 'react-hook-form'
 
 const Navbar = async () => {
  
-  const user = null
+  const user = await getServerSideUser()
 
   return (
     <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
@@ -48,7 +52,9 @@ const Navbar = async () => {
                     />
                   )}
 
-                  {user ? null : (
+                  {user ? (
+                    <UserAccountNav user = {user} />
+                  ) : (
                     <Link
                       href='/sign-up'
                       className={buttonVariants({

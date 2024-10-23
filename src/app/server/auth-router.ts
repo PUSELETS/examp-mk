@@ -48,7 +48,7 @@ export const authRouter = router({
 
                 //send email
                 //URL
-                const URL ="https://mk-mishacks-projects.vercel.app/verify-email?token="
+                const URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=`
                 const tokenUrl = `${token}`
                 const cancatinateUrl = URL + tokenUrl
                 //
@@ -74,9 +74,8 @@ export const authRouter = router({
 
     verifyEmail: publicProcedure
         .input(z.object({ token: z.string() }))
-        .query(async ({ input, ctx }) => {
+        .query(async ({ input }) => {
             const { token } = input
-            const { res } = ctx
 
             const respon = await db.user.list(
                 [Query.equal("Token", [token])]
@@ -92,7 +91,7 @@ export const authRouter = router({
 
             );
 
-    
+
 
             if (!isVerified)
                 throw new TRPCError({ code: 'UNAUTHORIZED' })
@@ -104,7 +103,14 @@ export const authRouter = router({
         .input(AuthCredentialsValidator)
         .mutation(async ({ input }) => {
             const { email, password } = input
-            
+             //check if user exist
+            const userExist = await db.user.list(
+                [Query.equal("email", [email])]
+            )
+            if (userExist.total !== 0)
+                throw new TRPCError({ code: 'CONFLICT' })
+
+
             try {
 
                 const payload = {
@@ -113,7 +119,7 @@ export const authRouter = router({
                 }
 
                 const token = await new SignJWT(payload)
-                    .setProtectedHeader({alg:'HS256'})
+                    .setProtectedHeader({ alg: 'HS256' })
                     .setJti(uuid())
                     .setIssuedAt()
                     .setExpirationTime('5m')
@@ -121,7 +127,7 @@ export const authRouter = router({
 
 
                 return setToken(token)
-                       
+
             } catch (err) {
                 throw new TRPCError({
                     code: 'UNAUTHORIZED',

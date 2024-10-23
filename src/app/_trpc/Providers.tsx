@@ -11,6 +11,10 @@ export const setToken = (newToken: string)=>{
     token = newToken
 }
 
+export const logout = async (logout: any)=> {
+    await logout()
+}
+
 
 const Providers = ({children}: PropsWithChildren) => {
     const [queryClient] = useState(()=> new QueryClient())
