@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest ,NextResponse } from "next/server";
 
-const handler = (request: NextApiRequest, response: NextApiResponse) => {
+const handler = (request: NextRequest, response: NextResponse) => {
 
     cookies().set("user-token", '', {expires: new Date(0)})
 
