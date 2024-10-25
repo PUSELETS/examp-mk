@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+export const dynamic = "force-dynamic"
+
 interface EmailTemplateProps {
     href: string;
     token: string;

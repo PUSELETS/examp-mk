@@ -17,6 +17,9 @@ import { ZodError } from 'zod'
 import { useRouter } from 'next/navigation'
 
 
+export const dynamic = "force-dynamic"
+
+
 function Page() {
 
     const AuthCredentialsValidator = z.object({ 
@@ -45,16 +48,13 @@ function Page() {
                 toast.error(
                     'This email is already in use. Sign in instead?'
                 )
-
                 return
             }
-
             if (err instanceof ZodError) {
                 toast.error(err.issues[0].message)
 
                 return
             }
-
             toast.error(
                 'Something went wrong. Please try again.'
             )

@@ -13,7 +13,7 @@ import { SignJWT } from "jose";
 import { getJwtSecretKey } from "../../lib/auth";
 
 
-
+export const dynamic = "force-dynamic"
 
 export const authRouter = router({
     createUser: publicProcedure
@@ -44,7 +44,7 @@ export const authRouter = router({
                     Token: token,
                     varified: false
                 }
-                const response = await db.user.create(data)
+                await db.user.create(data)
 
                 //send email
                 //URL

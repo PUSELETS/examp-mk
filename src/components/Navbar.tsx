@@ -11,6 +11,8 @@ import UserAccountNav from './UserAccountNav'
 import { getServerSideUser } from '@/lib/user'
 import { useForm } from 'react-hook-form'
 
+export const dynamic = "force-dynamic"
+
 const Navbar = async () => {
  
   const user = await getServerSideUser()

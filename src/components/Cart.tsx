@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { ScrollArea } from './ui/scroll-area'
 import { useEffect, useState } from 'react'
 
+export const dynamic = "force-dynamic"
 
 const Cart = () => {
 

@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
+export const dynamic = "force-dynamic"
+
 const MaxWidthWrapper = ({
     className,
     children
