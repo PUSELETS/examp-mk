@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { Client, Databases } from "appwrite"
 
 const ENDPOINT = "https://cloud.appwrite.io/v1"

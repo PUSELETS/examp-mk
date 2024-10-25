@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { initTRPC } from "@trpc/server";
 import { Context } from "./context";
 
