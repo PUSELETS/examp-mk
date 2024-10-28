@@ -6,7 +6,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 
-export const dynamic = "force-dynamic"
 
 interface VerifyEmailProps {
   token: string

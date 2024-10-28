@@ -27,7 +27,7 @@ export const authRouter = router({
         .mutation(async ({ input }) => {
             const { email, password } = input
     
-            
+    
             //check if user exist
 
             const respon = await db.user.list(

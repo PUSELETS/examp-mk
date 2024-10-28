@@ -17,7 +17,6 @@ import { ZodError } from 'zod'
 import { useRouter } from 'next/navigation'
 
 
-export const dynamic = "force-dynamic"
 
 
 function Page() {

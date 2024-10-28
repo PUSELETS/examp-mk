@@ -7,7 +7,6 @@ import {
   Leaf,
 } from 'lucide-react'
 
-export const dynamic = "force-dynamic"
 
 const perks = [
   {

@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import NavItem from './NavItem'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
  
-export const dynamic = "force-dynamic"
 
 const NavItems = () => {
   const [activeIndex, setActiveIndex] = useState<

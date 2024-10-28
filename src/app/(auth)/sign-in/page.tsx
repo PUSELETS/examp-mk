@@ -15,7 +15,7 @@ import { toast } from 'sonner'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { setToken } from '@/app/_trpc/Providers'
 
-export const dynamic = "force-dynamic"
+
 
 const Page = () => {
   const searchParams = useSearchParams()
