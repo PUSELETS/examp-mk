@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: "Create Next App",

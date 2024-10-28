@@ -2,6 +2,8 @@
 import VerifyEmail from "@/components/VerifyEmail"
 import Image from "next/image"
 
+export const revalidate = 0
+
 interface PageProps {
     searchParams: {
         [key: string]: string | string[] | undefined

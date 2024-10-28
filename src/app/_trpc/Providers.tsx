@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { trpc } from "@/app/_trpc/client"
 import { httpBatchLink } from "@trpc/client"
 
+export const revalidate = 0
+
 let token: string;
 
 export const setToken = (newToken: string)=>{
@@ -25,7 +27,8 @@ const Providers = ({children}: PropsWithChildren) => {
                 fetch(url, option) {
                     return fetch(url, {
                         ...option,
-                        credentials: 'include'
+                        credentials: 'include',
+                        cache: 'no-store'
                     })
                 },
             })
