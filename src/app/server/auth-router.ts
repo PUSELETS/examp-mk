@@ -11,6 +11,8 @@ import { databases, DATABASE_ID_DEV, COLLECTION_ID_USER } from "../appwrite";
 import { setToken } from "@/middleware";
 import { SignJWT } from "jose";
 import { getJwtSecretKey } from "../../lib/auth";
+import { cache } from "react";
+import { unstable_noStore } from "next/cache";
 
 
 export const dynamic = "force-dynamic"
@@ -26,8 +28,8 @@ export const authRouter = router({
         }))
         .mutation(async ({ input }) => {
             const { email, password } = input
-    
-    
+
+            unstable_noStore()
             //check if user exist
 
             const respon = await db.user.list(
@@ -78,6 +80,7 @@ export const authRouter = router({
         .input(z.object({ token: z.string() }))
         .query(async ({ input }) => {
             const { token } = input
+            unstable_noStore()
 
             const respon = await db.user.list(
                 [Query.equal("Token", [token])]
@@ -105,6 +108,7 @@ export const authRouter = router({
         .input(AuthCredentialsValidator)
         .mutation(async ({ input }) => {
             const { email, password } = input
+            unstable_noStore()
              //check if user exist
             const userExist = await db.user.list(
                 [Query.equal("email", [email])]
