@@ -48,25 +48,30 @@ export const authRouter = router({
                     Token: token,
                     varified: false
                 }
-                await db.user.create(data)
+                const forRef = await db.user.create(data)
 
                 //send email
                 //URL
-                const URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=`
-                const tokenUrl = `${token}`
-                const cancatinateUrl = URL + tokenUrl
-                //
-                const resend = new Resend("re_epnRGCk7_8d75vXMuhc5kaBmwX8693EfK");
-
-                const { error } = await resend.emails.send({
-                    from: 'MaketP <onboarding@resend.dev>',
-                    to: ['dimamabolo15@gmail.com'],
-                    subject: 'Hello world',
-                    react: EmailTemplate({ href: cancatinateUrl, token: token }),
-                });
-
-                if (error) {
-                    return console.error('failed', error)
+                if (forRef) {
+                    const URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=`
+                    const tokenUrl = `${token}`
+                    const cancatinateUrl = URL + tokenUrl
+                    //
+                    const resend = new Resend("re_epnRGCk7_8d75vXMuhc5kaBmwX8693EfK");
+                    setTimeout( async ()=>{
+                        const { error } = await resend.emails.send({
+                            from: 'MaketP <onboarding@resend.dev>',
+                            to: ['dimamabolo15@gmail.com'],
+                            subject: 'Hello world',
+                            react: EmailTemplate({ href: cancatinateUrl, token: token }),
+                        });
+    
+                        if (error) {
+                            return console.error('failed', error)
+                        }
+                        while(error)
+                            throw new TRPCError({ code: 'UNAUTHORIZED' })
+                    }, 10000)
                 }
 
             }
